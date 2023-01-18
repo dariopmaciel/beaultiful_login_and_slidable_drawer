@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/componentes/componente.dart';
-import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/componentes/sing_in_form.dart.dart';
+import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/btn_entrada.dart';
+import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/btn_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
