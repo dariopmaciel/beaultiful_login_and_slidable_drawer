@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/componentes/componente.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:rive/rive.dart';
 
@@ -55,7 +56,7 @@ class _EntradaState extends State<Entrada> {
           ),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
+              padding: EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,11 +83,54 @@ class _EntradaState extends State<Entrada> {
                     ),
                   ),
                   const Spacer(flex: 4),
-//botão iniciar
+//botão iniciar que chama o AlertaDialog
                   AnimatedBtn(
                     btnAnimaionController: _btnAnimaionController,
                     press: () {
                       _btnAnimaionController.isActive = true;
+                      showGeneralDialog(
+                        context: context,
+                        pageBuilder: (context, _, __) => Center(
+                          child: Container(
+                            height: 640,
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 50, horizontal: 24),
+                            decoration: const BoxDecoration(
+                              //color: Colors.red,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40),
+                              ),
+                            ),
+                            child: Scaffold(
+                              backgroundColor: Colors.transparent,
+                              body: SingleChildScrollView(
+                                reverse: true,
+                                child: Column(
+                                  children: const [
+                                    Text(
+                                      "Cadastre-se",
+                                      style: TextStyle(
+                                          fontSize: 34, fontFamily: "Poppins"),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 16),
+                                      child: Text(
+                                        "Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto Texto ",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                    SingInForm(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                     },
                   ),
                   const Padding(
@@ -101,6 +145,63 @@ class _EntradaState extends State<Entrada> {
               ),
             ),
           )
+        ],
+      ),
+    );
+  }
+}
+
+class SingInForm extends StatelessWidget {
+  const SingInForm({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Login",
+            style: TextStyle(color: Colors.black54),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 16),
+            child: TextFormField(
+              decoration: InputDecoration(
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SvgPicture.asset("assets/icons/email.svg"),
+                ),
+              ),
+            ),
+          ),
+          const Text(
+            "Senha",
+            style: TextStyle(color: Colors.black54),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 16),
+            child: TextFormField(
+              obscureText: true,
+              decoration: InputDecoration(
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SvgPicture.asset("assets/icons/password.svg"),
+                ),
+              ),
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: () {},
+            icon: Icon(Icons.arrow_forward),
+            label: Text("OK"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xfff77d8e),
+              minimumSize: const Size(double.infinity, 50),
+            ),
+          ),
         ],
       ),
     );
