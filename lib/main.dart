@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           errorBorder: defaultInputBorder,
         ),
       ),
-      home: const Entrada(),
+      home: Entrada(),
     );
   }
 }

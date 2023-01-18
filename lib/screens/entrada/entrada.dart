@@ -1,13 +1,14 @@
 import 'dart:ui';
 
 import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/componentes/componente.dart';
+import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/componentes/sing_in_form.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:rive/rive.dart';
 
 class Entrada extends StatefulWidget {
-  const Entrada({super.key});
+  Entrada({super.key});
 
   @override
   State<Entrada> createState() => _EntradaState();
@@ -51,12 +52,12 @@ class _EntradaState extends State<Entrada> {
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-              child: SizedBox(),
+              child: const SizedBox(),
             ),
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -64,9 +65,9 @@ class _EntradaState extends State<Entrada> {
                   SizedBox(
                     width: 340,
                     child: Column(
-                      children: const [
-                        SizedBox(height: 12),
-                        Text(
+                      children: [
+                        const SizedBox(height: 12),
+                        const Text(
                           "Área de blur \naprendida",
                           style: TextStyle(
                             fontSize: 56,
@@ -74,8 +75,8 @@ class _EntradaState extends State<Entrada> {
                             height: 1.2,
                           ),
                         ),
-                        SizedBox(height: 16),
-                        Text(
+                        const SizedBox(height: 16),
+                        const Text(
                           "Aprendendo Caligagrafia, Design, UI e UX.\nCom isto criarei melhores e mais belos App comerciais, sempre que precisar inovar a cada sazonalidade comercial ",
                           style: TextStyle(fontSize: 16, fontFamily: "Intel"),
                         ),
@@ -110,7 +111,7 @@ class _EntradaState extends State<Entrada> {
                                 child: Column(
                                   children: const [
                                     Text(
-                                      "Cadastre-se",
+                                      "Efetue Login",
                                       style: TextStyle(
                                           fontSize: 34, fontFamily: "Poppins"),
                                     ),
@@ -145,63 +146,6 @@ class _EntradaState extends State<Entrada> {
               ),
             ),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class SingInForm extends StatelessWidget {
-  const SingInForm({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Login",
-            style: TextStyle(color: Colors.black54),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 16),
-            child: TextFormField(
-              decoration: InputDecoration(
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SvgPicture.asset("assets/icons/email.svg"),
-                ),
-              ),
-            ),
-          ),
-          const Text(
-            "Senha",
-            style: TextStyle(color: Colors.black54),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 16),
-            child: TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SvgPicture.asset("assets/icons/password.svg"),
-                ),
-              ),
-            ),
-          ),
-          ElevatedButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.arrow_forward),
-            label: Text("OK"),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xfff77d8e),
-              minimumSize: const Size(double.infinity, 50),
-            ),
-          ),
         ],
       ),
     );
