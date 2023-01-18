@@ -1,8 +1,8 @@
 import 'dart:ui';
 
+import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/componentes/componente.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:rive/rive.dart';
 
 class Entrada extends StatefulWidget {
@@ -13,12 +13,14 @@ class Entrada extends StatefulWidget {
 }
 
 class _EntradaState extends State<Entrada> {
-
 //animação e inicialização da animação
   late RiveAnimationController _btnAnimaionController;
   @override
   void initState() {
-    _btnAnimaionController = OneShotAnimation("active");
+    _btnAnimaionController = OneShotAnimation(
+      "active",
+      autoplay: false,
+    );
     super.initState();
   }
 
@@ -35,6 +37,7 @@ class _EntradaState extends State<Entrada> {
             left: 100,
             child: Image.asset("assets/Backgrounds/Spline.png"),
           ),
+//não é necessário um blur sobre o componente parado
           // Positioned.fill(
           //   child: BackdropFilter(
           //     filter: ImageFilter.blur(sigmaX: 20, sigmaY: 10),
@@ -54,7 +57,9 @@ class _EntradaState extends State<Entrada> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Spacer(flex: 1),
                   SizedBox(
                     width: 340,
                     child: Column(
@@ -70,47 +75,28 @@ class _EntradaState extends State<Entrada> {
                         ),
                         SizedBox(height: 16),
                         Text(
-                          "Nunca deixe aprende Caligagrafia, Design, UI e UX, com isto voce criará melhores e mais belos App comerciais, sempre que precisar inovar a cada sazonalidade comercial ",
+                          "Aprendendo Caligagrafia, Design, UI e UX.\nCom isto criarei melhores e mais belos App comerciais, sempre que precisar inovar a cada sazonalidade comercial ",
                           style: TextStyle(fontSize: 16, fontFamily: "Intel"),
-                        )
+                        ),
                       ],
                     ),
                   ),
+                  const Spacer(flex: 4),
 //botão iniciar
-                  GestureDetector(
-                    onTap: () {
-//ativador da animação do botão
+                  AnimatedBtn(
+                    btnAnimaionController: _btnAnimaionController,
+                    press: () {
                       _btnAnimaionController.isActive = true;
                     },
-                    child: SizedBox(
-                      height: 64,
-                      width: 260,
-                      child: Center(
-                          child: Stack(
-                        children: [
-                          RiveAnimation.asset(
-                            "assets/RiveAssets/button.riv",
-//controlador da animação
-                            controllers: [_btnAnimaionController],
-                          ),
-                          Positioned.fill(
-                            top: 10,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(Icons.arrow_right_sharp),
-                                SizedBox(width: 8),
-                                Text(
-                                  "Pressione para Iniciar",
-                                  style: TextStyle(fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24),
+                    child: Text(
+                      "Este aprendizado  levou aproximadamente: \n-2h para aprender a usar o Rive e sua movimentação. \n-40min Para aprender e inserir o blur. \n-15min Para inserir e modifidar o botão. \n-20min Para aprender a usar a animação. ",
+                      style: TextStyle(fontSize: 14, fontFamily: "Intel"),
                     ),
                   ),
+                  const Spacer(flex: 1),
                 ],
               ),
             ),
