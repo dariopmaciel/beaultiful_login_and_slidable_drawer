@@ -17,12 +17,13 @@ class SingInForm extends StatelessWidget {
             style: TextStyle(color: Colors.black54),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 16),
+            padding: EdgeInsets.only(top: 8, bottom: 16),
             child: TextFormField(
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 prefixIcon: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SvgPicture.asset("assets/icons/email.svg"),
+                  child: SvgPicture.asset('assets/icons/email.svg'),
                 ),
               ),
             ),
@@ -34,6 +35,7 @@ class SingInForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 16),
             child: TextFormField(
+              keyboardType: TextInputType.number,
               obscureText: true,
               decoration: InputDecoration(
                 prefixIcon: Padding(

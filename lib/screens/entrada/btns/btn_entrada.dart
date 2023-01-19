@@ -36,7 +36,7 @@ class AnimatedBtn extends StatelessWidget {
                   SizedBox(width: 8),
                   Text(
                     "Pressione para Iniciar",
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                   ),
                 ],
               ),
