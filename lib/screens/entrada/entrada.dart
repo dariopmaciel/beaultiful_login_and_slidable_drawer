@@ -122,7 +122,7 @@ class _EntradaState extends State<Entrada> {
       transitionDuration: const Duration(milliseconds: 1000),
       context: context,
 //controle do movimento do AlertDialog
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
+      transitionBuilder: (_, animation, __, child) {
         Tween<Offset> tween;
         tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
