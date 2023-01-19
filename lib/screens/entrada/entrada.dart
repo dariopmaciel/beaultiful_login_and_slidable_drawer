@@ -29,6 +29,7 @@ class _EntradaState extends State<Entrada> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         //animação criada em Rive
         children: [
@@ -39,13 +40,6 @@ class _EntradaState extends State<Entrada> {
             left: 100,
             child: Image.asset("assets/Backgrounds/Spline.png"),
           ),
-//não é necessário um blur sobre o componente parado
-          // Positioned.fill(
-          //   child: BackdropFilter(
-          //     filter: ImageFilter.blur(sigmaX: 20, sigmaY: 10),
-          //     child: SizedBox(),
-          //   ),
-          // ),
 //comnente em movimento
           const RiveAnimation.asset("assets/RiveAssets/shapes.riv"),
 //blur
@@ -55,6 +49,7 @@ class _EntradaState extends State<Entrada> {
               child: const SizedBox(),
             ),
           ),
+//---------->
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -90,8 +85,7 @@ class _EntradaState extends State<Entrada> {
                     press: () {
                       _btnAnimaionController.isActive = true;
                       Future.delayed(const Duration(milliseconds: 1000), () {
-                        //slide animation
-
+//slide animation
                         custonSingInDialog(context);
                       });
                     },
@@ -100,7 +94,7 @@ class _EntradaState extends State<Entrada> {
                   const Padding(
                     padding: EdgeInsets.all(20),
                     child: Text(
-                      "Este aprendizado durou aproximadamente: \n-2h para Rive. \n-40min Inserir o blur. \n-15min Inserir e modifidar o botão. \n-20min Para aprender a usar a animação. ",
+                      "Este aprendizado durou aproximadamente: \n-2h para entender o Rive.app \n-15min Inserir e modifidar o botão. \n-10min Pausa do café. \n-20min Para aprender a usar a animação.\n-40min Inserir o blur.  ",
                       style: TextStyle(fontSize: 14, fontFamily: "Intel"),
                     ),
                   ),
