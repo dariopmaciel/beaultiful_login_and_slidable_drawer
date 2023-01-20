@@ -17,7 +17,7 @@ class SingInForm extends StatelessWidget {
             style: TextStyle(color: Colors.black54),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 8, bottom: 16),
+            padding: const EdgeInsets.only(top: 8, bottom: 16),
             child: TextFormField(
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -35,7 +35,7 @@ class SingInForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 16),
             child: TextFormField(
-              keyboardType: TextInputType.number,
+              // keyboardType: TextInputType.number,
               obscureText: true,
               decoration: InputDecoration(
                 prefixIcon: Padding(

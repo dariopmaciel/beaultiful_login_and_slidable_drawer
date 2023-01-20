@@ -229,7 +229,7 @@ class _EntradaState extends State<Entrada> {
                     ],
                   ),
                   const Positioned(
-                    bottom: -35,
+                    bottom: -30,
                     left: 0,
                     right: 0,
                     child: CircleAvatar(
