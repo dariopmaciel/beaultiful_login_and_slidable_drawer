@@ -1,4 +1,5 @@
-import 'package:beaultiful_login_and_slidable_drawer/screens/entry_point.dart';
+import 'package:beaultiful_login_and_slidable_drawer/entry_point.dart';
+import 'package:beaultiful_login_and_slidable_drawer/utils/rive_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
@@ -26,13 +27,8 @@ class _SingInFormState extends State<SingInForm> {
 
   late SMITrigger confetti;
 
-//controlador dos estados do gatilho, "componente"
-  StateMachineController getRiveController(Artboard artboard) {
-    StateMachineController? controller = StateMachineController.fromArtboard(
-        artboard, "State Machine 1"); //nome dado pelo criador no Rive
-    artboard.addController(controller!);
-    return controller;
-  }
+
+  
 
   void singIn(BuildContext context) {
     setState(() {
@@ -162,7 +158,7 @@ class _SingInFormState extends State<SingInForm> {
                 "assets/RiveAssets/check_error.riv",
                 onInit: (artboard) {
                   StateMachineController controller =
-                      getRiveController(artboard);
+                     RiveUtils.getRiveController(artboard);
                   check = controller.findSMI("Check") as SMITrigger;
                   error = controller.findSMI("Error") as SMITrigger;
                   reset = controller.findSMI("Reset") as SMITrigger;
@@ -177,7 +173,7 @@ class _SingInFormState extends State<SingInForm> {
                     "assets/RiveAssets/confetti.riv",
                     onInit: (artboard) {
                       StateMachineController controller =
-                          getRiveController(artboard);
+                         RiveUtils.getRiveController(artboard);
                       confetti =
                           controller.findSMI("Trigger explosion") as SMITrigger;
                     },
