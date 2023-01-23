@@ -1,22 +1,21 @@
 import 'dart:ui';
 
-import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/btn_entrada.dart';
-import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/sing_in_form.dart';
-import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/customiza%C3%A7%C3%A3o_btn_entrada.dart';
+import 'package:beaultiful_login_and_slidable_drawer/screens/onbording/components/animated_btn.dart';
+import 'package:beaultiful_login_and_slidable_drawer/screens/onbording/components/custon_sing_in_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:rive/rive.dart';
 
-class Entrada extends StatefulWidget {
-  const Entrada({super.key});
+class Onboarding extends StatefulWidget {
+  const Onboarding({super.key});
 
   @override
-  State<Entrada> createState() => _EntradaState();
+  State<Onboarding> createState() => _OnboardingState();
 }
 
-class _EntradaState extends State<Entrada> {
-//variavel de controle de moviimentação de tela de entrada iniciando falsa (garantindo a não movimentação)
+class _OnboardingState extends State<Onboarding> {
+//variavel de controle de moviimentação de tela de Onboarding iniciando falsa (garantindo a não movimentação)
   bool isSingInDialodshow = false;
 
 //animação e inicialização da animação

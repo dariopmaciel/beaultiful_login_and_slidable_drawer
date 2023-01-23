@@ -1,4 +1,4 @@
-import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/sing_in_form.dart';
+import 'package:beaultiful_login_and_slidable_drawer/screens/onbording/components/sing_in_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

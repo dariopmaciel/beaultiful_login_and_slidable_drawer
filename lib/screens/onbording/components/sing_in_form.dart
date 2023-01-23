@@ -1,3 +1,4 @@
+import 'package:beaultiful_login_and_slidable_drawer/screens/entry_point.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
@@ -14,23 +15,59 @@ class SingInForm extends StatefulWidget {
 
 class _SingInFormState extends State<SingInForm> {
 //------>
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool isShowLoading = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool isShowLoading = false;
+  bool isShowConfetti = false;
 //definição das variaveis detriger do icone de check error
   late SMITrigger check;
-  late SMITrigger reset;
   late SMITrigger error;
+  late SMITrigger reset;
 
   late SMITrigger confetti;
 
 //controlador dos estados do gatilho, "componente"
-  StateMachineController getRiveControler(Artboard artboard) {
+  StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller = StateMachineController.fromArtboard(
-        artboard, "State MAchine 1"); //nome dado pelo criador no Rive
-
+        artboard, "State Machine 1"); //nome dado pelo criador no Rive
     artboard.addController(controller!);
     return controller;
+  }
+
+  void singIn(BuildContext context) {
+    setState(() {
+      isShowLoading = true;
+      isShowConfetti = true;
+    });
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        if (_formKey.currentState!.validate()) {
+          //do the thing
+          check.fire();
+          Future.delayed(const Duration(seconds: 2), () {
+            setState(() {
+              isShowLoading = false;
+            });
+            confetti.fire();
+//se tudo OK aqui será a prox Tela
+//entrada na nova tela
+            Future.delayed(const Duration(seconds: 1), () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const EntryPoint()));
+            });
+          });
+        } else {
+          //don't do
+          error.fire();
+          Future.delayed(const Duration(seconds: 2), () {
+            setState(() {
+              isShowLoading = false;
+            });
+          });
+        }
+      },
+    );
   }
 
   @override
@@ -83,7 +120,6 @@ class _SingInFormState extends State<SingInForm> {
                   },
                   onSaved: (password) {},
                   // keyboardType: TextInputType.number,
-                  obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -96,32 +132,7 @@ class _SingInFormState extends State<SingInForm> {
                 padding: const EdgeInsets.only(top: 8, bottom: 24),
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    setState(() {
-                      isShowLoading = true;
-                    });
-                    Future.delayed(Duration(seconds: 1), () {
-                      if (_formKey.currentState!.validate()) {
-                        //Se tudo estiver bem
-                        check.fire();
-                        Future.delayed(
-                          Duration(seconds: 2),
-                          () {
-                            setState(() {
-                              isShowLoading = false;
-                            });
-                            confetti.fire();
-                          },
-                        );
-                      } else {
-                        //Se não estiver
-                        error.fire();
-                        Future.delayed(Duration(seconds: 2), () {
-                          setState(() {
-                            isShowLoading = false;
-                          });
-                        });
-                      }
-                    });
+                    singIn(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xfff77d8e),
@@ -151,22 +162,29 @@ class _SingInFormState extends State<SingInForm> {
                 "assets/RiveAssets/check_error.riv",
                 onInit: (artboard) {
                   StateMachineController controller =
-                      getRiveControler(artboard);
+                      getRiveController(artboard);
                   check = controller.findSMI("Check") as SMITrigger;
-                  reset = controller.findSMI("Reset") as SMITrigger;
                   error = controller.findSMI("Error") as SMITrigger;
+                  reset = controller.findSMI("Reset") as SMITrigger;
                 },
               ))
             : const SizedBox(),
-        CustomPositioned(
-          child: RiveAnimation.asset(
-            "assets/RiveAssets/confetti.riv",
-            onInit: (artboard) {
-              StateMachineController controller = getRiveControler(artboard);
-              confetti = controller.findSMI("Trigger explosion") as SMITrigger;
-            },
-          ),
-        ),
+        isShowConfetti
+            ? CustomPositioned(
+                child: Transform.scale(
+                  scale: 9,
+                  child: RiveAnimation.asset(
+                    "assets/RiveAssets/confetti.riv",
+                    onInit: (artboard) {
+                      StateMachineController controller =
+                          getRiveController(artboard);
+                      confetti =
+                          controller.findSMI("Trigger explosion") as SMITrigger;
+                    },
+                  ),
+                ),
+              )
+            : SizedBox(),
       ],
     );
   }
@@ -186,11 +204,11 @@ class CustomPositioned extends StatelessWidget {
         children: [
           Spacer(),
           SizedBox(
-            height: 100,
-            width: 100,
+            height: size,
+            width: size,
             child: child,
           ),
-          Spacer(flex: 2)
+          Spacer(flex: 2),
         ],
       ),
     );

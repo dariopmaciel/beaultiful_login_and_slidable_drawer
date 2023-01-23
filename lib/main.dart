@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/entrada/entrada.dart';
+import 'screens/onbording/onboarding.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           errorBorder: defaultInputBorder,
         ),
       ),
-      home: Entrada(),
+      home: Onboarding(),
     );
   }
 }
