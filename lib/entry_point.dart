@@ -13,9 +13,9 @@ class EntryPoint extends StatefulWidget {
   State<EntryPoint> createState() => _EntryPointState();
 }
 
-class _EntryPointState extends State<EntryPoint> {
-  late SMIBool searchTrigger;
+RiveAsset selectedBottomNav = bottomNavs.first;
 
+class _EntryPointState extends State<EntryPoint> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,26 +26,54 @@ class _EntryPointState extends State<EntryPoint> {
             color: backgroundColor2.withOpacity(0.8),
             borderRadius: const BorderRadius.all(Radius.circular(24))),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
-              onTap: () {
-                searchTrigger.change(true);
-              },
-              child: SizedBox(
-                height: 38,
-                width: 38,
-                child: RiveAnimation.asset(
-                  "assets/RiveAssets/icons.riv",
-                  artboard: "SEARCH",
-                  onInit: (artboard) {
-                    StateMachineController controller =
-                        RiveUtils.getRiveController(artboard,
-                            StateMachineName: "SEARCH_Interactivity");
-                    searchTrigger = controller.findSMI("active") as SMIBool;
-                  },
+            ...List.generate(
+              bottomNavs.length,
+              (index) => GestureDetector(
+                onTap: () {
+                  bottomNavs[index].input!.change(true);
+                  if (bottomNavs[index] != selectedBottomNav) {
+                    setState(() {
+                      selectedBottomNav = bottomNavs[index];
+                    });
+                  }
+                  Future.delayed(const Duration(seconds: 1), () {
+                    bottomNavs[index].input!.change(false);
+                  });
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Container(
+                    //   height: 4,
+                    //   width: 12,
+                    //   decoration: const BoxDecoration(color: Color(0xff81b4ff)),
+                    // ),
+                    SizedBox(
+                      height: 36,
+                      width: 36,
+                      child: Opacity(
+                        opacity:
+                            bottomNavs[index] == selectedBottomNav ? 1 : 0.5,
+                        child: RiveAnimation.asset(
+                          bottomNavs.first.src,
+                          artboard: bottomNavs[index].artboard,
+                          onInit: (artboard) {
+                            StateMachineController controller =
+                                RiveUtils.getRiveController(artboard,
+                                    StateMachineName:
+                                        bottomNavs[index].stateMachineName);
+                            bottomNavs[index].input =
+                                controller.findSMI("active") as SMIBool;
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -68,4 +96,21 @@ class RiveAsset {
   }
 }
 
-List<RiveAsset> bottomNavs = [];
+List<RiveAsset> bottomNavs = [
+  RiveAsset("assets/RiveAssets/icons.riv",
+      artboard: "CHAT", stateMachineName: "CHAT_Interactivity", title: "Chat"),
+  RiveAsset("assets/RiveAssets/icons.riv",
+      artboard: "SEARCH",
+      stateMachineName: "SEARCH_Interactivity",
+      title: "Search"),
+  RiveAsset("assets/RiveAssets/icons.riv",
+      artboard: "TIMER",
+      stateMachineName: "TIMER_Interactivity",
+      title: "Timer"),
+  RiveAsset("assets/RiveAssets/icons.riv",
+      artboard: "BELL",
+      stateMachineName: "BELL_Interactivity",
+      title: "Notification"),
+  RiveAsset("assets/RiveAssets/icons.riv",
+      artboard: "USER", stateMachineName: "USER_Interactivity", title: "User")
+];

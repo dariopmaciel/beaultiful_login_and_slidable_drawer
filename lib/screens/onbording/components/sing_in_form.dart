@@ -27,9 +27,6 @@ class _SingInFormState extends State<SingInForm> {
 
   late SMITrigger confetti;
 
-
-  
-
   void singIn(BuildContext context) {
     setState(() {
       isShowLoading = true;
@@ -107,6 +104,7 @@ class _SingInFormState extends State<SingInForm> {
               Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 16),
                 child: TextFormField(
+                  obscureText: true,
 //------> Validador de campo preenchido
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -158,7 +156,7 @@ class _SingInFormState extends State<SingInForm> {
                 "assets/RiveAssets/check_error.riv",
                 onInit: (artboard) {
                   StateMachineController controller =
-                     RiveUtils.getRiveController(artboard);
+                      RiveUtils.getRiveController(artboard);
                   check = controller.findSMI("Check") as SMITrigger;
                   error = controller.findSMI("Error") as SMITrigger;
                   reset = controller.findSMI("Reset") as SMITrigger;
@@ -173,7 +171,7 @@ class _SingInFormState extends State<SingInForm> {
                     "assets/RiveAssets/confetti.riv",
                     onInit: (artboard) {
                       StateMachineController controller =
-                         RiveUtils.getRiveController(artboard);
+                          RiveUtils.getRiveController(artboard);
                       confetti =
                           controller.findSMI("Trigger explosion") as SMITrigger;
                     },
