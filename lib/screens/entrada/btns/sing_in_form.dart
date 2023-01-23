@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
+import 'package:rive/rive.dart';
 
 class SingInForm extends StatefulWidget {
   const SingInForm({
@@ -14,15 +15,19 @@ class SingInForm extends StatefulWidget {
 class _SingInFormState extends State<SingInForm> {
 //------>
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isShowLoading = false;
 
 //definição das variaveis detriger do icone de check error
-  late SMIBool check;
-  late SMIBool reset;
-  late SMIBool error;
-//controlador dos estados do componente
+  late SMITrigger check;
+  late SMITrigger reset;
+  late SMITrigger error;
+
+  late SMITrigger confetti;
+
+//controlador dos estados do gatilho, "componente"
   StateMachineController getRiveControler(Artboard artboard) {
-    StateMachineController? controller =
-        StateMachineController.fromArtboard(artboard, "State MAchine 1");
+    StateMachineController? controller = StateMachineController.fromArtboard(
+        artboard, "State MAchine 1"); //nome dado pelo criador no Rive
 
     artboard.addController(controller!);
     return controller;
@@ -91,12 +96,32 @@ class _SingInFormState extends State<SingInForm> {
                 padding: const EdgeInsets.only(top: 8, bottom: 24),
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    if (_formKey().currentState!.validate()) {
-                      //Se tudo estiver bem OK
-                    } else {
-                      //Se não estiver
-
-                    }
+                    setState(() {
+                      isShowLoading = true;
+                    });
+                    Future.delayed(Duration(seconds: 1), () {
+                      if (_formKey.currentState!.validate()) {
+                        //Se tudo estiver bem
+                        check.fire();
+                        Future.delayed(
+                          Duration(seconds: 2),
+                          () {
+                            setState(() {
+                              isShowLoading = false;
+                            });
+                            confetti.fire();
+                          },
+                        );
+                      } else {
+                        //Se não estiver
+                        error.fire();
+                        Future.delayed(Duration(seconds: 2), () {
+                          setState(() {
+                            isShowLoading = false;
+                          });
+                        });
+                      }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xfff77d8e),
@@ -120,8 +145,27 @@ class _SingInFormState extends State<SingInForm> {
             ],
           ),
         ),
-        Positioned.fill(
-          child: RiveAnimation.asset("assets/RiveAssets/check_error.riv"),
+        isShowLoading
+            ? CustomPositioned(
+                child: RiveAnimation.asset(
+                "assets/RiveAssets/check_error.riv",
+                onInit: (artboard) {
+                  StateMachineController controller =
+                      getRiveControler(artboard);
+                  check = controller.findSMI("Check") as SMITrigger;
+                  reset = controller.findSMI("Reset") as SMITrigger;
+                  error = controller.findSMI("Error") as SMITrigger;
+                },
+              ))
+            : const SizedBox(),
+        CustomPositioned(
+          child: RiveAnimation.asset(
+            "assets/RiveAssets/confetti.riv",
+            onInit: (artboard) {
+              StateMachineController controller = getRiveControler(artboard);
+              confetti = controller.findSMI("Trigger explosion") as SMITrigger;
+            },
+          ),
         ),
       ],
     );
@@ -129,3 +173,26 @@ class _SingInFormState extends State<SingInForm> {
 }
 
 //"assets/RiveAssets/check_error.riv"
+class CustomPositioned extends StatelessWidget {
+  const CustomPositioned({super.key, required this.child, this.size = 100});
+
+  final Widget child;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: Column(
+        children: [
+          Spacer(),
+          SizedBox(
+            height: 100,
+            width: 100,
+            child: child,
+          ),
+          Spacer(flex: 2)
+        ],
+      ),
+    );
+  }
+}
