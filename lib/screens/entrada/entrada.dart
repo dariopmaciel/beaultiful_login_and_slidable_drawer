@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/btn_entrada.dart';
 import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/btn_login.dart';
+import 'package:beaultiful_login_and_slidable_drawer/screens/entrada/btns/customiza%C3%A7%C3%A3o_btn_entrada.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,6 +16,9 @@ class Entrada extends StatefulWidget {
 }
 
 class _EntradaState extends State<Entrada> {
+//variavel de controle de moviimentação de tela de entrada iniciando falsa (garantindo a não movimentação)
+  bool isSingInDialodshow = false;
+
 //animação e inicialização da animação
   late RiveAnimationController _btnAnimaionController;
   @override
@@ -29,7 +33,7 @@ class _EntradaState extends State<Entrada> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       body: Stack(
         //animação criada em Rive
         children: [
@@ -50,202 +54,75 @@ class _EntradaState extends State<Entrada> {
             ),
           ),
 //---------->
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Spacer(flex: 1),
-                  SizedBox(
-                    width: 620,
-                    child: Column(
-                      children: const [
-                        SizedBox(height: 12),
-                        Text(
-                          "Blur Aprendido",
-                          style: TextStyle(
-                            fontSize: 56,
-                            fontFamily: "Poppins",
-                            height: 1.2,
+          AnimatedPositioned(
+            top: isSingInDialodshow ? -50 : 0,
+            //top: -50,
+            duration: const Duration(milliseconds: 1000),
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(flex: 1),
+                    SizedBox(
+                      width: 620,
+                      child: Column(
+                        children: const [
+                          SizedBox(height: 12),
+                          Text(
+                            "Blur Aprendido",
+                            style: TextStyle(
+                              fontSize: 56,
+                              fontFamily: "Poppins",
+                              height: 1.2,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 16),
-                        Text(
-                          "Aprendendo Caligagrafia, Design, UI e UX.\nCom isto criarei melhores e mais belos App comerciais, sempre que precisar inovar a cada sazonalidade comercial ",
-                          style: TextStyle(fontSize: 16, fontFamily: "Intel"),
-                        ),
-                      ],
+                          SizedBox(height: 16),
+                          Text(
+                            "Aprendendo Caligagrafia, Design, UI e UX.\nCom isto criarei melhores e mais belos App comerciais, sempre que precisar inovar a cada sazonalidade comercial ",
+                            style: TextStyle(fontSize: 16, fontFamily: "Intel"),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Spacer(flex: 3),
-//botão iniciar que chama o AlertaDialog
-                  AnimatedBtn(
-                    btnAnimaionController: _btnAnimaionController,
-                    press: () {
-                      _btnAnimaionController.isActive = true;
-                      Future.delayed(const Duration(milliseconds: 1000), () {
-//slide animation
-                        custonSingInDialog(context);
-                      });
-                    },
-                  ),
-                  const Spacer(flex: 2),
-                  const Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                      "Este aprendizado durou aproximadamente: \n-2h para entender o Rive.app \n-15min Inserir e modifidar o botão. \n-10min Pausa do café. \n-20min Para aprender a usar a animação.\n-40min Inserir o blur.  ",
-                      style: TextStyle(fontSize: 14, fontFamily: "Intel"),
+                    const Spacer(flex: 3),
+                    //botão iniciar que chama o AlertaDialog
+                    AnimatedBtn(
+                      btnAnimaionController: _btnAnimaionController,
+                      press: () {
+                        _btnAnimaionController.isActive = true;
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          //slide animation
+                          custonSingInDialog(context, onClose: (__) {
+                            setState(() {
+                              isSingInDialodshow = false;
+                            });
+                          });
+                          setState(() {
+                            isSingInDialodshow = true;
+                          });
+                        });
+                      },
                     ),
-                  ),
-                  const Spacer(flex: 1),
-//                  const Spacer(flex: 1),
-                ],
+                    const Spacer(flex: 2),
+                    const Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        "Este aprendizado durou aproximadamente: \n-2h para entender o Rive.app \n-15min Inserir e modifidar o botão. \n-10min Pausa do café. \n-20min Para aprender a usar a animação.\n-40min Inserir o blur.  ",
+                        style: TextStyle(fontSize: 14, fontFamily: "Intel"),
+                      ),
+                    ),
+                    const Spacer(flex: 1),
+                    //                  const Spacer(flex: 1),
+                  ],
+                ),
               ),
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Future<Object?> custonSingInDialog(BuildContext context) {
-    return showGeneralDialog(
-      barrierDismissible: true,
-      barrierLabel: "Sing In",
-      transitionDuration: const Duration(milliseconds: 1000),
-      context: context,
-//controle do movimento do AlertDialog
-      transitionBuilder: (_, animation, __, child) {
-        Tween<Offset> tween;
-        tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
-        return SlideTransition(
-          position: tween.animate(
-            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
-          ),
-          child: child,
-        );
-      },
-      pageBuilder: (context, _, __) => Center(
-        child: Container(
-//----------------->
-          height: 550,
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-          decoration: const BoxDecoration(
-            //color: Colors.red,
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(40),
-            ),
-          ),
-          child: Scaffold(
-//----------------->
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.transparent,
-            //backgroundColor: Colors.blue,
-            body: SingleChildScrollView(
-              reverse: true,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Column(
-                    children: [
-                      const Text(
-                        "Efetue Login",
-                        style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        child: Text(
-                          "Efetue seu acesso ",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                      const SingInForm(),
-                      Row(
-                        children: const [
-                          Expanded(child: Divider()),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                              "Or",
-                              style: TextStyle(color: Colors.black26),
-                            ),
-                          ),
-                          Expanded(child: Divider()),
-                        ],
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: Text(
-                          "Efetue seu Login via: \nDigital, Email, Apple e Google",
-                          style: TextStyle(color: Colors.black54),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              "assets/icons/finger_print.svg",
-                              height: 64,
-                              width: 64,
-                            ),
-                          ),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              "assets/icons/email_box.svg",
-                              height: 64,
-                              width: 64,
-                            ),
-                          ),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              "assets/icons/apple_box.svg",
-                              height: 64,
-                              width: 64,
-                            ),
-                          ),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              "assets/icons/google_box.svg",
-                              height: 64,
-                              width: 64,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Positioned(
-                    bottom: -30,
-                    left: 0,
-                    right: 0,
-                    child: CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.black,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
