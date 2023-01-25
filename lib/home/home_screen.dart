@@ -19,59 +19,70 @@ class HomeScreen extends StatelessWidget {
                   .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
             ),
           ),
-          Container(
-            // color: Colors.red,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
-            height: 280,
-            width: 260,
-            decoration: const BoxDecoration(
-              color: Color(0xff7553f6),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-            ),
-            child: Row(
+          Cartoes(),
+        ]),
+      ),
+    );
+  }
+}
+
+class Cartoes extends StatelessWidget {
+  const Cartoes({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // color: Colors.red,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
+      height: 280,
+      width: 260,
+      decoration: const BoxDecoration(
+        color: Color(0xff7553f6),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Animação em SwiftUI",
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.w600),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 8),
-                        child: Text(
-                          "Construindo este App atraves dos rascunhos liberados pela FlutterWay",
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                      ),
-                      const Text(
-                        "XX Seções - 28 Horas de trabalho",
-                        style: TextStyle(color: Colors.white38),
-                      ),
-                      const Spacer(),
-                      Row(
-                        children: List.generate(
-                          3,
-                          (index) => Transform.translate(
-                            offset: Offset((-10 * index).toDouble(), 0),
-                            child: CircleAvatar(
-                                radius: 24,
-                                backgroundImage: AssetImage(
-                                    "assets/avaters/Avatar ${index + 1}.jpg")),
-                          ),
-                        ),
-                      )
-                    ],
+                Text(
+                  "Animação em SwiftUI",
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w600),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 8),
+                  child: Text(
+                    "Construindo este App atraves dos rascunhos liberados pela FlutterWay",
+                    style: TextStyle(color: Colors.white70),
                   ),
                 ),
-                SvgPicture.asset("assets/icons/ios.svg")
+                const Text(
+                  "XX Seções - 28 Horas de trabalho",
+                  style: TextStyle(color: Colors.white38),
+                ),
+                const Spacer(),
+                Row(
+                  children: List.generate(
+                    3,
+                    (index) => Transform.translate(
+                      offset: Offset((-10 * index).toDouble(), 0),
+                      child: CircleAvatar(
+                          radius: 24,
+                          backgroundImage: AssetImage(
+                              "assets/avaters/Avatar ${index + 1}.jpg")),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
-        ]),
+          SvgPicture.asset("assets/icons/ios.svg")
+        ],
       ),
     );
   }
