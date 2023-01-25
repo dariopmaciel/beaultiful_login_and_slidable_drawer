@@ -41,8 +41,9 @@ class CourseCard extends StatelessWidget {
                     style: const TextStyle(color: Colors.white70),
                   ),
                 ),
-                const Text(
-                  "XX Seções - 28 Horas de trabalho",
+                Text(
+                  course.subtitle,
+                  //"XX Seções - 28 Horas de trabalho",
                   style: TextStyle(color: Colors.white38),
                 ),
                 const Spacer(),

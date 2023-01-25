@@ -10,88 +10,112 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                "Cursos",
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ...course
-                      .map((course) => Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: CourseCard(course: course),
-                          ))
-                      .toList(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                "Recentes",
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(fontWeight: FontWeight.w600),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-              decoration: const BoxDecoration(
-                color: Color(0xff7553f6),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25),
+        bottom: false,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  "Barra Animada Horizontal",
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      color: Colors.black, fontWeight: FontWeight.w600),
                 ),
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Estado de máquina",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                  color: Colors.white70,
-                                  fontWeight: FontWeight.w600),
-                        ),
-                        const Text(
-                          "Esta simples demorou aproximadamente 3h para sua finalização",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                    child: VerticalDivider(
-                      color: Colors.white70,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  SvgPicture.asset("assets/icons/ios.svg")
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ...course
+                        .map((course) => Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: CourseCard(course: course),
+                            ))
+                        .toList(),
+                  ],
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  "Coluna Animada Vertical",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+              ...recentCourse.map(
+                (course) => Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                  child: SecondaryCourseCard(
+                    course: course,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+//barra vertical
+class SecondaryCourseCard extends StatelessWidget {
+  const SecondaryCourseCard({
+    Key? key,
+    required this.course,
+  }) : super(key: key);
+
+  final Course course;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      decoration: BoxDecoration(
+        //color: Colors.blue,
+        color: course.bgColor,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(25),
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Text(
+                  course.title,
+                  //"Tempo de execução",
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      color: Colors.white70, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  course.subtitle,
+                  //"Tempo 15 min",
+                  // "O tempo de execução foi imenso. \nMas o aprendizado será eterno. \nO item mais trabalhoso foi BottomNavigatorBar, criada manualmente.  ",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+            child: VerticalDivider(
+              color: Colors.white70,
+            ),
+          ),
+          const SizedBox(width: 8),
+          SvgPicture.asset(course.iconSrc)
+        ],
       ),
     );
   }
