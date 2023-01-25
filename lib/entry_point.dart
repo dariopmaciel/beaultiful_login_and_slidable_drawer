@@ -1,6 +1,9 @@
 //https://rive.app/community/1298-2487-animated-icon-set-1-color/
 
+import 'package:beaultiful_login_and_slidable_drawer/components/animated_bar.dart';
 import 'package:beaultiful_login_and_slidable_drawer/constants.dart';
+import 'package:beaultiful_login_and_slidable_drawer/home/home_screen.dart';
+import 'package:beaultiful_login_and_slidable_drawer/models/rive_asset.dart';
 import 'package:beaultiful_login_and_slidable_drawer/utils/rive_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +22,7 @@ class _EntryPointState extends State<EntryPoint> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: const HomeScreen(),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -45,11 +49,8 @@ class _EntryPointState extends State<EntryPoint> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Container(
-                    //   height: 4,
-                    //   width: 12,
-                    //   decoration: const BoxDecoration(color: Color(0xff81b4ff)),
-                    // ),
+                    AnimatedBar(
+                        isActivate: bottomNavs[index] == selectedBottomNav),
                     SizedBox(
                       height: 36,
                       width: 36,
@@ -80,37 +81,3 @@ class _EntryPointState extends State<EntryPoint> {
     );
   }
 }
-
-class RiveAsset {
-  final String artboard, stateMachineName, title, src;
-  late SMIBool? input;
-
-  RiveAsset(this.src,
-      {required this.artboard,
-      required this.stateMachineName,
-      required this.title,
-      this.input});
-
-  set setInput(SMIBool status) {
-    input = status;
-  }
-}
-
-List<RiveAsset> bottomNavs = [
-  RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "CHAT", stateMachineName: "CHAT_Interactivity", title: "Chat"),
-  RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "SEARCH",
-      stateMachineName: "SEARCH_Interactivity",
-      title: "Search"),
-  RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "TIMER",
-      stateMachineName: "TIMER_Interactivity",
-      title: "Timer"),
-  RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "BELL",
-      stateMachineName: "BELL_Interactivity",
-      title: "Notification"),
-  RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "USER", stateMachineName: "USER_Interactivity", title: "User")
-];
