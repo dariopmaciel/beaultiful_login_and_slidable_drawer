@@ -25,32 +25,9 @@ class _EntryPointState extends State<EntryPoint> {
       resizeToAvoidBottomInset: false,
       extendBody: true,
       body: Stack(
-        children: [
-          const HomeScreen(),
-          SafeArea(
-            child: Container(
-              margin: const EdgeInsets.only(left: 5, top: 40),
-              height: 40,
-              width: 40,
-              decoration: const BoxDecoration(
-                color: Colors.white38,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    offset: Offset(0, 3),
-                    blurRadius: 8,
-                  )
-                ],
-              ),
-              child: const RiveAnimation.asset(
-                "assets/RiveAssets/menu_button.riv",
-                // onInit: (artboard) {
-
-                // },
-              ),
-            ),
-          ),
+        children: const [
+          HomeScreen(),
+          MenuBtn(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -106,6 +83,40 @@ class _EntryPointState extends State<EntryPoint> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MenuBtn extends StatelessWidget {
+  const MenuBtn({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.only(left: 5, top: 40),
+        height: 40,
+        width: 40,
+        decoration: const BoxDecoration(
+          color: Colors.white38,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0, 3),
+              blurRadius: 8,
+            )
+          ],
+        ),
+        child: const RiveAnimation.asset(
+          "assets/RiveAssets/menu_button.riv",
+          // onInit: (artboard) {
+
+          // },
         ),
       ),
     );
