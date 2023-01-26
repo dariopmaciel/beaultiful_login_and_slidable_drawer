@@ -25,6 +25,7 @@ class _SideMenuState extends State<SideMenu> {
         color: const Color(0xff17203a),
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const InfoCard(
                 name: "Dario de Paula Maciel",
@@ -33,13 +34,48 @@ class _SideMenuState extends State<SideMenu> {
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
                 child: Text(
-                  "Browse".toUpperCase(),
+                  "Menu".toUpperCase(),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Colors.white,
                       ),
                 ),
               ),
               ...sideMenus.map(
+                (menu) => SideMenuTile(
+                  menu: menu,
+                  riveOnInit: (artboard) {
+                    // Do the thing
+                    StateMachineController controller =
+                        RiveUtils.getRiveController(artboard,
+                            StateMachineName: menu.stateMachineName);
+                    menu.input = controller.findSMI("active") as SMIBool;
+                  },
+                  press: () {
+                    menu.input!.change(true);
+                    Future.delayed(
+                      Duration(seconds: 1),
+                      () {
+                        //falso
+                        menu.input!.change(false);
+                      },
+                    );
+                    setState(() {
+                      selectedMenu = menu;
+                    });
+                  },
+                  isActive: selectedMenu == menu,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
+                child: Text(
+                  "Avisos".toUpperCase(),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.white,
+                      ),
+                ),
+              ),
+              ...sideMenu2.map(
                 (menu) => SideMenuTile(
                   menu: menu,
                   riveOnInit: (artboard) {

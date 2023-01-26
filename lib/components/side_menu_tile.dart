@@ -22,21 +22,29 @@ class SideMenuTile extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(left: 24),
-          child: Divider(color: Colors.white, height: 1),
+          child: Divider(
+            color: Colors.white70,
+            height: 1,
+            thickness: 1,
+            indent: 40,
+            endIndent: 0,
+          ),
+          //child: Divider(height: 10),
         ),
         Stack(
           children: [
-            isActive
-                ? Positioned(
-                    height: 56,
-                    width: 288,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                    ),
-                  )
-                : SizedBox(),
+//movimento lateral do container
+            AnimatedPositioned(
+              height: 56,
+              width: isActive ? 288 : 0,
+              left: 0,
+              duration: const Duration(milliseconds: 250),
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.purple,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+              ),
+            ),
             ListTile(
               onTap: press,
               leading: SizedBox(
