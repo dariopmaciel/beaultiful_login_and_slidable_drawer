@@ -1,3 +1,4 @@
+import 'package:beaultiful_login_and_slidable_drawer/components/side_menu.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/onbording/onboarding.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           errorBorder: defaultInputBorder,
         ),
       ),
-      home: Onboarding(),
+      home: SideMenu(),
     );
   }
 }

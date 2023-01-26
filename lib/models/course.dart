@@ -16,7 +16,7 @@ class Course {
 List<Course> course = [
 //01
   Course(
-    title: "Animação com SwiftUI",
+    title: "Animação com Rive",
     description:
         "Construindo este App atraves dos rascunhos liberados pela FlutterWay",
     iconSrc: "assets/icons/code.svg",
@@ -55,7 +55,7 @@ List<Course> recentCourse = [
   ),
   //06
   Course(
-    title: "Ela está toda personalizada",
+    title: "Ela foi feita a mão e está toda personalizada",
     bgColor: const Color(0xff9cc5ff),
     iconSrc: "assets/icons/code.svg",
   ),
@@ -63,8 +63,8 @@ List<Course> recentCourse = [
     title: "Translucida e não sobreposta a area da coluna",
   ),
   Course(
-    title: "Com icones Animados",
-    subtitle: "E iluminados quando selecionados.",
+    title: "Com icones Rive Animados",
+    subtitle: "e iluminados quando selecionados.",
     bgColor: const Color(0xff80a4ff),
     iconSrc: "assets/icons/code.svg",
   ),
@@ -75,5 +75,6 @@ List<Course> recentCourse = [
   ),
   Course(
     title: "",
+    bgColor: Colors.transparent,
   ),
 ];
