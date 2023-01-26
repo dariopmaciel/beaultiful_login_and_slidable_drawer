@@ -38,7 +38,8 @@ class SideMenuTile extends StatelessWidget {
               height: 56,
               width: isActive ? 288 : 0,
               left: 0,
-              duration: const Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 800),
+              curve: Curves.fastLinearToSlowEaseIn,
               child: Container(
                 decoration: const BoxDecoration(
                     color: Colors.purple,

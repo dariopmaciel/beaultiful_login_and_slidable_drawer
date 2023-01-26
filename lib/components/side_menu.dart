@@ -69,7 +69,7 @@ class _SideMenuState extends State<SideMenu> {
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
                 child: Text(
-                  "Avisos".toUpperCase(),
+                  "Históricos".toUpperCase(),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Colors.white,
                       ),
