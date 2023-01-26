@@ -29,12 +29,25 @@ class _EntryPointState extends State<EntryPoint> {
           const HomeScreen(),
           SafeArea(
             child: Container(
+              margin: const EdgeInsets.only(left: 5, top: 40),
               height: 40,
               width: 40,
-              decoration: BoxDecoration(
-                color: Colors.red,
+              decoration: const BoxDecoration(
+                color: Colors.white38,
                 shape: BoxShape.circle,
-                boxShadow: BoxShadow(),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0, 3),
+                    blurRadius: 8,
+                  )
+                ],
+              ),
+              child: const RiveAnimation.asset(
+                "assets/RiveAssets/menu_button.riv",
+                // onInit: (artboard) {
+
+                // },
               ),
             ),
           ),
