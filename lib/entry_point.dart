@@ -3,6 +3,7 @@
 import 'package:beaultiful_login_and_slidable_drawer/components/animated_bar.dart';
 import 'package:beaultiful_login_and_slidable_drawer/constants.dart';
 import 'package:beaultiful_login_and_slidable_drawer/home/home_screen.dart';
+import 'package:beaultiful_login_and_slidable_drawer/models/menu_btn.dart';
 import 'package:beaultiful_login_and_slidable_drawer/models/rive_asset.dart';
 import 'package:beaultiful_login_and_slidable_drawer/utils/rive_utils.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class EntryPoint extends StatefulWidget {
 }
 
 RiveAsset selectedBottomNav = bottomNavs.first;
+late SMIBool isMenuOpen;
 
 class _EntryPointState extends State<EntryPoint> {
   @override
@@ -25,9 +27,19 @@ class _EntryPointState extends State<EntryPoint> {
       resizeToAvoidBottomInset: false,
       extendBody: true,
       body: Stack(
-        children: const [
-          HomeScreen(),
-          MenuBtn(),
+        children: [
+          const HomeScreen(),
+          MenuBtn(
+            riveOnInit: (artboard) {
+              StateMachineController controller = RiveUtils.getRiveController(
+                  artboard,
+                  StateMachineName: "State Machine");
+              isMenuOpen = controller.findSMI("isOpen") as SMIBool;
+            },
+            press: () {
+              isMenuOpen.value = !isMenuOpen.value;
+            },
+          ),
         ],
       ),
       bottomNavigationBar: Container(
@@ -83,40 +95,6 @@ class _EntryPointState extends State<EntryPoint> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class MenuBtn extends StatelessWidget {
-  const MenuBtn({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: const EdgeInsets.only(left: 5, top: 40),
-        height: 40,
-        width: 40,
-        decoration: const BoxDecoration(
-          color: Colors.white38,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0, 3),
-              blurRadius: 8,
-            )
-          ],
-        ),
-        child: const RiveAnimation.asset(
-          "assets/RiveAssets/menu_button.riv",
-          // onInit: (artboard) {
-
-          // },
         ),
       ),
     );
